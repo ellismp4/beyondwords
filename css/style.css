@@ -1,0 +1,1149 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   BEYONDWORDS — shared stylesheet
+   Used by index.html (patient) and provider.html (provider).
+   Sections: 1 Tokens · 2 Base · 3 Layout & type · 4 Home
+             5 Buttons · 6 Cards & forms · 7 Questionnaire
+             8 Quick help · 9 Call screen · 10 Provider page
+             11 Responsive · 12 Reduced motion
+   ========================================================= */
+
+/* 1. TOKENS ------------------------------------------------ */
+:root {
+  --ink: #342C35;
+  --muted: #625965;
+  --plum: #7A6174;
+  --plum-dark: #624B5C;
+  --mauve: #8C7284;
+  --pink: #D1B1C8;
+  --pink-light: #F3E7EF;
+  --rose: #B1B7D1;
+  --lavender-light: #E9EAF2;
+  --blue-light: #EEF0F8;
+  --paper: #FFFFFF;
+  --canvas: #F8F6F8;
+  --line: #DCD8E1;
+  --focus: #52649A;
+  --success: #426C5B;
+  --success-light: #EAF2ED;
+  --radius: 18px;
+  --shadow: 0 6px 18px rgba(52, 44, 53, 0.10);
+  --shadow-hover: 0 8px 22px rgba(52, 44, 53, 0.14);
+  --shadow-card: 0 3px 12px rgba(52, 44, 53, 0.05);
+
+  --font-primary: "Nunito Sans", sans-serif;
+  --font-heading: "Comfortaa", sans-serif;
+}
+
+/* 2. BASE -------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: var(--font-primary);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+button:disabled { cursor: not-allowed; opacity: 0.55; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+[hidden] { display: none !important; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 100;
+  padding: 10px 14px;
+  background: #fff;
+  color: var(--ink);
+}
+.skip-link:focus { left: 8px; }
+
+/* Header and logo */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 64px;
+  padding: 4px 24px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+
+.logo-link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.logo-link:focus-visible {
+  outline: 3px solid var(--plum);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.site-logo {
+  display: block;
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: var(--plum);
+  color: #fff;
+}
+
+/* 3. LAYOUT & TYPE ----------------------------------------- */
+.page-shell {
+  width: min(100% - 2rem, 1100px);
+  margin-inline: auto;
+  padding-block: 2rem;
+}
+
+.screen {
+  width: 100%;
+  max-width: 100%;
+  animation: fade-in 0.18s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0.4; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header { margin-bottom: 1.5rem; }
+
+#prepare .card { width: 100%; }
+
+h1, h2, h3, h4, p { margin-top: 0; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
+p { margin-bottom: 12px; }
+
+h1 {
+  max-width: 760px;
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.12;
+}
+
+h2 {
+  margin-bottom: 10px;
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  line-height: 1.2;
+}
+
+h3 { margin-bottom: 6px; font-size: 1.2rem; line-height: 1.3; }
+h4 { margin-bottom: 5px; }
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--plum);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.lead {
+  max-width: 680px;
+  margin-bottom: 16px;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.section-heading {
+  max-width: 800px;
+  margin: 24px 0 14px;
+}
+.section-heading > :last-child { margin-bottom: 0; }
+
+/* 4. HOME / WELCOME ---------------------------------------- */
+.home-page {
+  max-width: 1100px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 36px 0 56px;
+  color: var(--ink);
+}
+
+.home-page h1,
+.home-page h2 {
+  font-family: var(--font-heading);
+  line-height: 1.3;
+}
+.home-page h1 { font-size: clamp(2rem, 4vw, 2.8rem); margin: 0 0 16px; }
+.home-page h2 { font-size: 1.45rem; margin: 0 0 10px; }
+.home-page p { line-height: 1.65; }
+.home-page a:focus-visible { outline-offset: 4px; }
+
+.welcome-panel {
+  padding: clamp(22px, 3vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: linear-gradient(120deg, #f7eaf0, #fff 75%);
+  box-shadow: var(--shadow);
+}
+.welcome-panel > :last-child { margin-bottom: 0; }
+
+.welcome-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 40px;
+  margin-bottom: 26px;
+  border-radius: 24px;
+  background: var(--pink-light);
+}
+
+.welcome-content,
+.welcome-text {
+  flex: 1;
+  width: 100%;
+}
+
+.welcome-text { max-width: 600px; }
+
+.welcome-text > p:not(.eyebrow) {
+  font-size: 1.1rem;
+  max-width: 480px;
+  margin: 0 0 24px;
+}
+
+.welcome-section .button-primary {
+  min-height: 52px;
+  padding: 12px 24px;
+}
+
+.welcome-art {
+  flex: 0 0 190px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.art-circle {
+  width: 170px;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--lavender-light);
+}
+
+.art-flower {
+  color: var(--plum);
+  font-size: 100px;
+  line-height: 1;
+}
+
+.step-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 20px;
+}
+
+.step-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.step-link span {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--pink-light);
+}
+
+.step-link.active { border-color: var(--plum); background: var(--pink-light); }
+
+/* Appointment card (white with a mauve accent) */
+.appointment-card {
+  display: block;
+  width: 100%;
+  padding: 28px;
+  margin-bottom: 36px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--mauve);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.appointment-icon {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: var(--lavender-light);
+  font-size: 30px;
+}
+
+.appointment-details p { margin: 0 0 10px; }
+
+/* Help banner (dusty pink) */
+.help-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  padding: 24px 28px;
+  background: var(--pink-light);
+  border: 1px solid #E7D3E1;
+  border-radius: 18px;
+}
+
+.help-banner-icon {
+  flex-shrink: 0;
+  color: var(--plum);
+  font-size: 38px;
+}
+
+.help-banner div { flex: 1; }
+.help-banner p { margin: 0; }
+
+/* 5. BUTTONS ----------------------------------------------- */
+.button,
+.button-primary,
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 10px 17px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-weight: 750;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button-primary,
+.button-secondary { font-size: 1.05rem; }
+
+.button-primary { color: #fff; background: var(--plum); }
+.button-primary:hover { color: #fff; background: var(--plum-dark); box-shadow: var(--shadow-hover); }
+
+.button-secondary { color: var(--ink); background: #fff; border-color: #cbbdca; }
+.button-secondary:hover,
+.button-quiet:hover { background: var(--pink-light); }
+
+.button-quiet { border-color: var(--line); background: transparent; color: var(--ink); }
+
+.button-small {
+  min-height: 42px;
+  padding: 8px 13px;
+  border: 1px solid #cfc2ce;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.text-button {
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--plum-dark);
+  text-decoration: underline;
+}
+
+/* 6. CARDS & FORMS ----------------------------------------- */
+.card {
+  padding: clamp(18px, 2.5vw, 26px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.form-stack { display: grid; gap: 20px; }
+
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0 0 20px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+legend {
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.choice-grid { display: grid; gap: 12px; }
+.choice-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.choice-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.choice-card,
+.check-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.choice-card {
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  min-height: 112px;
+  text-align: center;
+}
+
+.choice-card:has(input:checked),
+.check-card:has(input:checked) {
+  padding: 12px;
+  border: 2px solid var(--plum);
+  background: #fbf2f6;
+}
+
+.choice-card input,
+.check-card input {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  accent-color: var(--plum);
+}
+
+.choice-card input[type="radio"] {
+  order: 3;
+  width: 20px;
+  height: 20px;
+  margin: 4px 0 0;
+  cursor: pointer;
+}
+
+.choice-card strong { order: 2; }
+
+.choice-card .mood-icon {
+  order: 1;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.choice-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--pink-light);
+  color: var(--plum);
+  font-size: 1.5rem;
+}
+
+.method-icon {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--plum);
+  font-size: 2rem;
+}
+
+.field { display: grid; gap: 8px; }
+label { font-weight: 600; }
+
+input[type="text"], input[type="email"], input[type="tel"],
+input[type="date"], input[type="time"], select, textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 13px;
+  border: 1px solid #cfc2ce;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+}
+
+textarea { min-height: 90px; resize: vertical; }
+textarea::placeholder, input::placeholder { color: #827481; opacity: 1; }
+
+.helper-text {
+  margin: 6px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Support person */
+.support-options { display: flex; align-items: stretch; gap: 12px; margin: 14px 0 20px; }
+
+.support-option {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 10px;
+  border: 2px solid #d8cbd5;
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+.support-option:has(input:checked) { border-color: var(--plum); background: var(--pink-light); }
+.support-option input { flex-shrink: 0; width: 18px; height: 18px; accent-color: var(--plum); }
+
+.support-person-field { margin-top: 8px; }
+.support-person-field input[type="text"] {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  border: 2px solid #d8cbd5;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/* 7. QUESTIONNAIRE ----------------------------------------- */
+.quiz-page { display: grid; gap: 1rem; }
+.quiz-page h3 { margin: 0; font-size: 1.5rem; line-height: 1.3; }
+.quiz-page fieldset { margin: 0; padding: 0; border: 0; }
+.quiz-page legend { margin-bottom: 0.75rem; font-weight: 700; }
+
+.quiz-progress { margin: 0.75rem 0 1rem; }
+.quiz-progress p { margin: 0.5rem 0 0; color: var(--muted); }
+
+.progress-track {
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--rose);
+}
+.progress-track span {
+  display: block;
+  width: 16.67%;
+  height: 100%;
+  background: var(--plum);
+  transition: width 0.2s ease;
+}
+
+.quiz-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rose);
+}
+.quiz-navigation button { min-height: 50px; }
+#quizNext, #quizFinish { margin-left: auto; }
+
+/* 8. QUICK HELP -------------------------------------------- */
+.quick-help { margin-bottom: 36px; }
+.quick-help > p { margin: 0 0 22px; }
+
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.help-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  min-height: 160px;
+  padding: 24px;
+  color: var(--ink);
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow-card);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Alternate soft pink, lavender and neutral */
+.help-card:nth-child(1) { background: var(--pink-light); border-color: #E7D3E1; }
+.help-card:nth-child(2) { background: #E9EAF2; border-color: #D1D2E0; }
+.help-card:nth-child(3) { background: var(--canvas); border-color: var(--line); }
+
+.help-card:hover { transform: translateY(-2px); box-shadow: 0 7px 18px rgba(52, 44, 53, 0.10); }
+.help-card:nth-child(1):hover { background: #EEDCE9; }
+.help-card:nth-child(2):hover { background: #DDE0EE; }
+.help-card:nth-child(3):hover { background: var(--pink-light); }
+
+.help-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--pink-light);
+  font-size: 26px;
+}
+
+.help-title {
+  color: var(--plum-dark);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.help-description { color: var(--muted); line-height: 1.5; }
+
+/* 9. CALL SCREEN (patient #appointment, provider #call) ----- */
+.call-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #211e27;
+  color: #fff;
+}
+
+.call-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.call-topbar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.call-topbar > div { display: flex; flex-direction: column; gap: 6px; }
+
+.call-logo img {
+  display: block;
+  width: 160px;
+  height: auto;
+  max-height: 55px;
+  object-fit: contain;
+}
+
+.call-status { color: #e2dce8; font-size: 0.9rem; }
+
+.status-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #a7d9b5;
+}
+
+.call-text-button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #77717f;
+  border-radius: 10px;
+  background: #39343f;
+  color: #fff;
+}
+
+/* Main video area */
+.provider-video {
+  position: absolute;
+  inset: 76px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid #514b5a;
+  border-radius: 18px;
+  background: #393440;
+  text-align: center;
+}
+.provider-video h2 { margin: 0; font-size: clamp(1.3rem, 3vw, 2rem); }
+.provider-video p { margin: 0; color: #e2dce8; }
+
+.provider-avatar,
+.self-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #d9c6df;
+  color: var(--ink);
+  font-weight: 700;
+}
+.provider-avatar { width: 100px; height: 100px; font-size: 2rem; }
+.self-avatar { width: 42px; height: 42px; }
+
+.video-demo-label {
+  margin-top: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #514b5a;
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+.self-view {
+  position: absolute;
+  right: 36px;
+  bottom: 36px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid #77717f;
+  border-radius: 12px;
+  background: #393440;
+}
+
+.call-stage.camera-off .self-avatar { opacity: 0.45; }
+
+.call-message {
+  position: absolute;
+  left: 36px;
+  bottom: 36px;
+  max-width: 45%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #393440;
+  color: #fff;
+}
+
+/* Bottom controls */
+.call-toolbar {
+  position: relative;
+  z-index: 25;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 104px;
+  padding: 12px 16px 64px;
+  border-top: 1px solid #514b5a;
+  background: #17151c;
+}
+
+.call-tool {
+  display: flex;
+  flex: 0 1 160px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 120px;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid #514b5a;
+  border-radius: 12px;
+  background: #302b36;
+  color: #fff;
+  text-align: center;
+}
+.call-tool i { font-size: 1.35rem; }
+.call-tool span { display: block; font-size: 0.9rem; line-height: 1.3; }
+.call-tool:hover,
+.call-tool[aria-pressed="true"] { background: #51445a; border-color: #cbb5d7; }
+
+.end-call-container {
+  position: absolute;
+  right: 24px;
+  bottom: 12px;
+  z-index: 120;
+}
+
+.end-call-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 999px;
+  background: #c83f50;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.end-call-button span { font-size: 0.9rem; }
+.end-call-button:hover { background: #a92e3e; }
+
+/* Floating communication popup */
+.call-tool-panel {
+  position: absolute;
+  z-index: 20;
+  top: 85px;
+  right: 24px;
+  bottom: 125px;
+  width: min(380px, calc(100vw - 48px));
+  max-height: calc(100% - 220px);
+  padding: 20px;
+  overflow-y: auto;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid #d5cbdc;
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgb(0 0 0 / 30%);
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.panel-heading h2 { margin: 0; font-size: 1.25rem; }
+
+.panel-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  min-height: 42px;
+  padding: 8px;
+  border: 1px solid #d5cbdc;
+  border-radius: 10px;
+  background: #f3edf4;
+  color: var(--ink);
+}
+
+.call-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.call-panel-content label { display: block; font-weight: 700; }
+.call-panel-content .toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.call-tool-panel textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #c9bdce;
+  border-radius: 10px;
+}
+
+.call-tool-panel canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #d5cbdc;
+  border-radius: 10px;
+  background: #fff;
+  touch-action: none;
+}
+
+.call-screen button:focus-visible,
+.call-screen textarea:focus-visible,
+.call-screen input:focus-visible {
+  outline: 3px solid #e5c6ff;
+  outline-offset: 3px;
+}
+
+/* Focus mode: only the provider image, the X and End call */
+.call-screen.focus-mode .call-topbar,
+.call-screen.focus-mode .self-view,
+.call-screen.focus-mode .call-message,
+.call-screen.focus-mode .call-toolbar,
+.call-screen.focus-mode .call-tool-panel {
+  display: none !important;
+}
+
+.call-screen.focus-mode .call-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: #111;
+}
+
+.call-screen.focus-mode .provider-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.call-screen.focus-mode .exit-focus-button {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 110;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 50%;
+  background: rgb(30 30 30 / 75%);
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+/* 10. PROVIDER PAGE ---------------------------------------- */
+.provider-page .intro { margin-bottom: 28px; color: var(--muted); }
+.provider-page .muted { color: var(--muted); font-size: 0.92rem; }
+
+.provider-page .grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.provider-page .card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.provider-page .card-header h2,
+.provider-page .card-header h3 { margin-bottom: 0; }
+
+.provider-page .icon-box {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border-radius: 12px;
+  background: var(--pink-light);
+  color: var(--plum);
+}
+
+.provider-page .metric-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.provider-page .metric {
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.provider-page .metric-number { display: block; font-size: 1.65rem; font-weight: 700; }
+.provider-page .metric-label { color: var(--muted); font-size: 0.9rem; }
+
+.provider-page .patient-row { display: flex; align-items: center; gap: 14px; }
+.provider-page .patient-row h2,
+.provider-page .patient-row h3 { margin-bottom: 3px; }
+
+.provider-page .avatar {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  border-radius: 50%;
+  background: var(--rose);
+  color: var(--ink);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.provider-page .appointment-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 0;
+  border-left-width: 1px;
+  border-left-color: var(--line);
+}
+.provider-page .appointment-time { margin-bottom: 8px; color: var(--plum); font-weight: 700; }
+
+.provider-page .preference-list { margin: 0; padding: 0; list-style: none; }
+.provider-page .preference-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.provider-page .preference-list li:last-child { border-bottom: 0; }
+.provider-page .preference-list i { margin-top: 4px; color: var(--plum); }
+
+.provider-page .response-box {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--blue-light);
+}
+.provider-page .response-box p:last-child { margin-bottom: 0; }
+
+.provider-page .workspace-toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+
+.provider-page .status-message {
+  min-height: 24px;
+  margin-top: 12px;
+  color: var(--success);
+  font-weight: 700;
+}
+
+.provider-message-preview {
+  padding: 14px;
+  margin-top: 14px;
+  border-radius: 10px;
+  background: var(--pink-light);
+  overflow-wrap: anywhere;
+}
+
+/* 11. RESPONSIVE ------------------------------------------- */
+@media (max-width: 800px) {
+  .page-shell { padding: 18px 20px 30px; }
+  .site-logo { width: 180px; max-height: 48px; }
+  .appointment-grid { grid-template-columns: 1fr; }
+  .video-card { position: static; }
+  .video-placeholder { min-height: 220px; }
+}
+
+@media (max-width: 760px) {
+  .welcome-section { padding: 24px; }
+  .welcome-art { flex-basis: 120px; }
+  .art-circle { width: 115px; height: 115px; }
+  .art-flower { font-size: 70px; }
+
+  .help-grid { grid-template-columns: 1fr; }
+  .help-card { min-height: auto; }
+
+  .help-banner { align-items: flex-start; flex-wrap: wrap; }
+  .help-banner .button-secondary { width: 100%; }
+
+  .call-tool { flex: 1 1 100px; min-width: 0; }
+  .provider-video { inset: 80px 12px 12px; }
+  .self-view { right: 22px; bottom: 22px; }
+  .call-message { left: 22px; bottom: 22px; max-width: 50%; }
+}
+
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .site-header { min-height: 54px; padding: 4px 14px; }
+  .site-logo { width: 155px; max-width: 60vw; max-height: 44px; }
+  .page-shell { padding: 12px 16px 24px; }
+  .welcome-panel { padding: 20px; border-radius: 16px; }
+  .card { padding: 18px; }
+
+  .choice-grid.two,
+  .choice-grid.three,
+  .summary-grid,
+  .provider-columns,
+  .provider-page .grid,
+  .provider-page .metric-row { grid-template-columns: 1fr; }
+
+  .choice-card { flex-direction: row; justify-content: flex-start; min-height: 80px; text-align: left; }
+  .choice-card input { margin-right: 2px; }
+  .button-row > .button { width: 100%; }
+  .step-link { flex: 1 1 44%; }
+  .quiz-navigation button { flex: 1; }
+  .support-options { flex-direction: column; }
+  .support-option { justify-content: flex-start; text-align: left; }
+
+  .provider-page .appointment-card { align-items: stretch; }
+  .provider-page .appointment-card .button { width: 100%; }
+
+  .call-toolbar { gap: 6px; padding: 8px 8px 68px; }
+  .call-tool { padding: 8px 10px; font-size: 0.85rem; }
+  .end-call-container { right: 12px; bottom: 8px; }
+  .call-screen.focus-mode .exit-focus-button { top: 12px; right: 12px; }
+
+  .call-tool-panel {
+    top: 72px;
+    right: 12px;
+    bottom: 115px;
+    width: min(340px, calc(100vw - 24px));
+    max-height: calc(100% - 190px);
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page { width: 92%; padding-top: 24px; }
+  .welcome-section { gap: 12px; }
+  .welcome-art { flex-basis: 70px; }
+  .art-circle { width: 70px; height: 70px; }
+  .art-flower { font-size: 44px; }
+
+  .appointment-card { align-items: flex-start; gap: 14px; padding: 20px; }
+  .appointment-icon { width: 48px; height: 48px; font-size: 24px; }
+  .help-banner { padding: 22px; }
+}
+
+/* 12. REDUCED MOTION --------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .help-card,
+  .button,
+  .button-primary,
+  .button-secondary { transition: none; }
+
+  .help-card:hover { transform: none; }
+}
