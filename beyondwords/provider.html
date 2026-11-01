@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeyondWords</title>
+  <link rel="icon" href="images/favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/shared.js" defer></script>
+  <script src="js/provider.js" defer></script>
+</head>
+<body class="provider-page">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <a href="index.html" class="logo-link" aria-label="Return to home page">
+      <img src="images/logo.png" alt="BeyondWords" class="site-logo">
+    </a>
+  </header>
+
+  <main id="main" class="page-shell">
+
+    <!-- DASHBOARD -->
+    <section class="screen" id="dashboard">
+      <p class="eyebrow">PROVIDER HOME</p>
+      <h1>Your workspace</h1>
+      <p class="intro">
+        Prepare for visits and support each patient's communication needs.
+      </p>
+
+      <div class="metric-row">
+        <div class="metric">
+          <span class="metric-number">1</span>
+          <span class="metric-label">Today's Visits</span>
+        </div>
+        <div class="metric">
+          <span class="metric-number">10:30</span>
+          <span class="metric-label">Next Appointment</span>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <h2>Upcoming appointment</h2>
+      </div>
+
+      <div class="card appointment-card">
+        <div>
+          <p class="appointment-time">
+            <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+            Today's demo appointment
+          </p>
+
+          <div class="patient-row">
+            <div class="avatar" aria-hidden="true">P</div>
+            <div>
+              <h3>Demo patient</h3>
+              <p class="muted">Aphasia communication support</p>
+            </div>
+          </div>
+
+          <p class="muted" style="margin: 14px 0 0;">
+            Review communication preferences before starting.
+          </p>
+        </div>
+
+        <button type="button" class="button button-primary" data-go="patient">
+          Review patient
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- PATIENT OVERVIEW -->
+    <section class="screen" id="patient" hidden>
+      <p class="eyebrow">PATIENT OVERVIEW</p>
+      <h1>Get to know the patient</h1>
+      <p class="intro">
+        Review the patient's preferences before beginning the conversation.
+      </p>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="patient-row">
+            <div class="avatar" aria-hidden="true">P</div>
+            <div>
+              <h2>Demo patient</h2>
+              <p class="muted">Sample profile · No real identifying information</p>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          This profile demonstrates how patient-provided communication
+          preferences could be presented to a provider.
+        </p>
+      </div>
+
+      <div class="section-heading">
+        <h2>Communication preferences</h2>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>Helpful communication methods</h3>
+            <div class="icon-box">
+              <i class="fa-solid fa-comment" aria-hidden="true"></i>
+            </div>
+          </div>
+
+          <ul class="preference-list">
+            <li>
+              <i class="fa-solid fa-check" aria-hidden="true"></i>
+              <span>Speaking, with extra time to respond</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-check" aria-hidden="true"></i>
+              <span>Writing or typing when needed</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-check" aria-hidden="true"></i>
+              <span>Pictures, symbols, or drawing</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-check" aria-hidden="true"></i>
+              <span>Simple explanations and one question at a time</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Ways to provide support</h3>
+            <div class="icon-box">
+              <i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i>
+            </div>
+          </div>
+
+          <ul class="preference-list">
+            <li>
+              <i class="fa-solid fa-check" aria-hidden="true"></i>
+              <span>Allow time for the patient to express their thoughts.</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-check" aria-hidden="true"></i>
+              <span>Offer another way to communicate without assuming help is needed.</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-check" aria-hidden="true"></i>
+              <span>Check understanding respectfully.</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-check" aria-hidden="true"></i>
+              <span>Include a support person if the patient wishes.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <h2>Pre-visit responses</h2>
+      </div>
+
+      <div class="card">
+        <h3>What the patient wants to discuss</h3>
+
+        <div class="response-box">
+          <p><strong>Main concern</strong></p>
+          <p>
+            I want to talk about how I have been feeling and get help
+            understanding my options.
+          </p>
+        </div>
+
+        <div class="response-box">
+          <p><strong>How the patient is feeling</strong></p>
+          <p>
+            The patient has indicated that they may need additional time
+            to express their feelings.
+          </p>
+        </div>
+
+        <div class="response-box">
+          <p><strong>Questions for the appointment</strong></p>
+          <p>What are my options, and what should I do after this visit?</p>
+        </div>
+
+        <p class="muted" style="margin-top: 16px;">
+          These are example responses for the prototype, not actual patient data.
+        </p>
+      </div>
+
+      <div class="section-heading">
+        <h2>Ready to begin?</h2>
+      </div>
+
+      <div class="card">
+        <p>
+          Keep this profile available as a reminder during the visit.
+          The patient should remain an active participant in decisions
+          about their care and communication support.
+        </p>
+
+        <div class="workspace-toolbar">
+          <button type="button" class="button button-primary" data-go="call">
+            Join call
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- PROVIDER CALL INTERFACE -->
+    <section id="call" class="screen call-screen" hidden>
+
+      <div class="call-stage">
+        <div class="call-topbar">
+          <a href="index.html" class="call-logo" aria-label="BeyondWords home">
+            <img src="images/logo.png" alt="BeyondWords" class="site-logo">
+          </a>
+
+          <button type="button" class="call-text-button" id="callHelp">
+            Need help?
+          </button>
+        </div>
+
+        <div class="provider-video" id="providerVideo">
+          <div class="provider-avatar" aria-hidden="true">DP</div>
+          <h2>Your patient will appear here</h2>
+          <p>This is a demonstration.</p>
+          <span class="video-demo-label">PROVIDER VIEW</span>
+        </div>
+
+        <div class="self-view">
+          <div class="self-avatar" aria-hidden="true">You</div>
+          <span>You</span>
+        </div>
+      </div>
+
+      <!-- Floating communication popup -->
+      <div class="call-tool-panel" id="callToolPanel" hidden>
+        <div class="panel-heading">
+          <h2 id="callPanelTitle">Communication tool</h2>
+          <button type="button" class="panel-close" id="closeCallPanel"
+                  aria-label="Close communication tool">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="call-panel-content" data-panel="message" hidden>
+          <p>Write a message to share during the visit.</p>
+
+          <label for="providerMessage">Your message</label>
+          <textarea id="providerMessage" rows="4" placeholder="Type a message here..."></textarea>
+
+          <button type="button" class="button button-primary" id="providerShowMessage">
+            Show message on call
+          </button>
+
+          <p id="providerMessagePreview" class="provider-message-preview" hidden></p>
+        </div>
+
+        <div class="call-panel-content" data-panel="notes" hidden>
+          <p>Write notes to help you remember important details.</p>
+
+          <label for="providerVisitNotes">My visit notes</label>
+          <textarea id="providerVisitNotes" rows="5" placeholder="Write your notes here..."></textarea>
+
+          <p class="helper-text">
+            Notes are saved locally in this demonstration only.
+          </p>
+        </div>
+
+        <div class="call-panel-content" data-panel="support" hidden>
+          <h3>Communication reminders</h3>
+
+          <ul>
+            <li>Give the patient extra time to respond.</li>
+            <li>Use short, clear sentences.</li>
+            <li>Ask one question at a time.</li>
+            <li>Offer writing, drawing, or choices when helpful.</li>
+            <li>Check that you understood what the patient meant.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom call toolbar -->
+      <div class="call-toolbar" aria-label="Communication and call controls">
+        <button type="button" class="call-tool" data-tool="message" aria-pressed="false">
+          <i class="fa-solid fa-comment-dots" aria-hidden="true"></i>
+          <span>Type a message</span>
+        </button>
+
+        <button type="button" class="call-tool" data-tool="notes" aria-pressed="false">
+          <i class="fa-solid fa-note-sticky" aria-hidden="true"></i>
+          <span>Visit notes</span>
+        </button>
+
+        <button type="button" class="call-tool" data-tool="support" aria-pressed="false">
+          <i class="fa-solid fa-heart" aria-hidden="true"></i>
+          <span>Communication tips</span>
+        </button>
+
+        <button type="button" class="call-tool" id="muteButton" aria-pressed="false">
+          <i class="fa-solid fa-microphone" aria-hidden="true"></i>
+          <span>Mute</span>
+        </button>
+
+        <button type="button" class="call-tool" id="cameraButton" aria-pressed="false">
+          <i class="fa-solid fa-video" aria-hidden="true"></i>
+          <span>Turn camera off</span>
+        </button>
+
+        <button type="button" class="call-tool" data-go="summary">
+          <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
+          <span>After-visit summary</span>
+        </button>
+      </div>
+
+      <div class="end-call-container">
+        <button type="button" id="endCallButton" class="end-call-button">
+          <i class="fa-solid fa-phone-slash" aria-hidden="true"></i>
+          <span>End call</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

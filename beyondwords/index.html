@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BeyondWords</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/shared.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <a href="index.html" class="logo-link" aria-label="Return to home page">
+      <img src="images/logo.png" alt="BeyondWords" class="site-logo">
+    </a>
+  </header>
+
+  <main id="main" class="page-shell">
+
+    <!-- HOME -->
+    <div id="home" class="screen">
+      <section class="welcome-section" id="welcome">
+        <div class="welcome-content">
+          <p class="eyebrow">COMMUNICATE YOUR WAY</p>
+          <h1>Welcome!</h1>
+          <h2>Let's get ready for your visit.</h2>
+          <p class="lead">
+            Take your time. This short questionnaire will help
+            your provider understand how you communicate best.
+          </p>
+
+          <div class="button-row">
+            <button class="button-primary" data-go="prepare">
+              Prepare for My Visit <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="quick-help">
+        <h2>How can we help?</h2>
+        <p>Choose an option below.</p>
+
+        <div class="help-grid">
+          <a href="communication.html" class="help-card">
+            <span class="help-title">Communication Help</span>
+            <span class="help-description">Explore ways to communicate.</span>
+          </a>
+
+          <a href="profile.html" class="help-card">
+            <span class="help-title">My Profile</span>
+            <span class="help-description">View your communication preferences.</span>
+          </a>
+
+          <a href="help.html" class="help-card">
+            <span class="help-title">Help and Troubleshooting</span>
+            <span class="help-description">Learn how to use this website.</span>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- PREPARE FOR VISIT (questionnaire) -->
+    <section class="screen" id="prepare" hidden>
+      <div class="section-heading">
+        <p class="eyebrow">BEFORE YOUR VISIT</p>
+        <h2>Let's get ready for your visit.</h2>
+        <p>Choose your answers. You can go back at any time.</p>
+      </div>
+
+      <div class="quiz-progress">
+        <div class="progress-track">
+          <span id="quizProgressFill"></span>
+        </div>
+        <p id="quizProgressText" aria-live="polite">Step 1 of 4</p>
+      </div>
+
+      <form id="prepareForm" class="card form-stack">
+
+        <!-- Question 1: mood -->
+        <section class="quiz-page" data-quiz-page="1">
+          <p class="eyebrow">QUESTION 1 OF 4</p>
+          <h3>How are you feeling today?</h3>
+          <p>Choose one answer.</p>
+
+          <fieldset>
+            <legend>How are you feeling?</legend>
+
+            <div class="choice-grid three">
+              <label class="choice-card">
+                <input type="radio" name="mood" value="Good">
+                <img src="images/good.png" alt="" class="mood-icon">
+                <strong>Good</strong>
+              </label>
+
+              <label class="choice-card">
+                <input type="radio" name="mood" value="Okay">
+                <img src="images/mid.png" alt="" class="mood-icon">
+                <strong>Okay</strong>
+              </label>
+
+              <label class="choice-card">
+                <input type="radio" name="mood" value="Not good">
+                <img src="images/bad.png" alt="" class="mood-icon">
+                <strong>Not good</strong>
+              </label>
+            </div>
+          </fieldset>
+        </section>
+
+        <!-- Question 2: communication methods -->
+        <section class="quiz-page" data-quiz-page="2" hidden>
+          <p class="eyebrow">QUESTION 2 OF 4</p>
+          <h3>What helps you communicate?</h3>
+          <p>Choose all that help you.</p>
+
+          <fieldset>
+            <legend>My communication methods</legend>
+
+            <div class="choice-grid two">
+              <label class="check-card">
+                <input type="checkbox" name="methods" value="Speaking">
+                <i class="fa-solid fa-comment-dots method-icon" aria-hidden="true"></i>
+                <span>Speaking</span>
+              </label>
+
+              <label class="check-card">
+                <input type="checkbox" name="methods" value="Writing or typing">
+                <i class="fa-solid fa-pen-to-square method-icon" aria-hidden="true"></i>
+                <span>Writing or typing</span>
+              </label>
+
+              <label class="check-card">
+                <input type="checkbox" name="methods" value="Pictures or symbols">
+                <i class="fa-solid fa-images method-icon" aria-hidden="true"></i>
+                <span>Pictures or symbols</span>
+              </label>
+
+              <label class="check-card">
+                <input type="checkbox" name="methods" value="Gestures or drawing">
+                <i class="fa-solid fa-hand method-icon" aria-hidden="true"></i>
+                <span>Gestures or drawing</span>
+              </label>
+
+              <label class="check-card">
+                <input type="checkbox" name="methods" value="Extra time">
+                <i class="fa-regular fa-clock method-icon" aria-hidden="true"></i>
+                <span>Extra time</span>
+              </label>
+
+              <label class="check-card">
+                <input type="checkbox" name="methods" value="Support person">
+                <i class="fa-solid fa-user-group method-icon" aria-hidden="true"></i>
+                <span>Support person</span>
+              </label>
+            </div>
+          </fieldset>
+        </section>
+
+        <!-- Question 3: caregiver -->
+        <section class="quiz-page" data-quiz-page="3" hidden>
+          <p class="eyebrow">QUESTION 3 OF 4</p>
+          <h3>If you have a caregiver, would you like them to help during your visit?</h3>
+
+          <fieldset>
+            <div class="choice-grid two">
+              <label class="check-card">
+                <input type="radio" name="caregiverInvolvement" value="None">
+                <i class="fa-solid fa-user method-icon" aria-hidden="true"></i>
+                <span>No help</span>
+              </label>
+
+              <label class="check-card">
+                <input type="radio" name="caregiverInvolvement" value="Some">
+                <i class="fa-solid fa-user-plus method-icon" aria-hidden="true"></i>
+                <span>Help when needed</span>
+              </label>
+
+              <label class="check-card">
+                <input type="radio" name="caregiverInvolvement" value="Throughout">
+                <i class="fa-solid fa-users method-icon" aria-hidden="true"></i>
+                <span>Help throughout</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="support-person-field">
+            <label for="supportPerson">Who is joining you today? (Optional)</label>
+            <p id="supportPersonHelp" class="helper-text">
+              You can name a family member, friend, or another support person.
+            </p>
+            <input type="text" id="supportPerson" name="supportPerson"
+                   aria-describedby="supportPersonHelp">
+          </div>
+        </section>
+
+        <!-- Question 4: visit summary -->
+        <section class="quiz-page" data-quiz-page="4" hidden>
+          <p class="eyebrow">QUESTION 4 OF 4</p>
+          <h3>Would you like a summary of your visit?</h3>
+          <p>
+            A summary can help you remember what you talked about
+            and what happens next.
+          </p>
+
+          <fieldset>
+            <legend>Would you like a summary?</legend>
+
+            <div class="choice-grid two">
+              <label class="check-card">
+                <input type="radio" name="wantsSummary" value="Yes">
+                <span>Yes, please</span>
+              </label>
+
+              <label class="check-card">
+                <input type="radio" name="wantsSummary" value="No">
+                <span>No, thank you</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset id="summaryRecipientsField">
+            <legend>Who should receive the summary?</legend>
+
+            <div class="choice-grid two">
+              <label class="check-card">
+                <input type="radio" name="summaryRecipients" value="Me">
+                <i class="fa-solid fa-user method-icon" aria-hidden="true"></i>
+                <span>Send it to me</span>
+              </label>
+
+              <label class="check-card">
+                <input type="radio" name="summaryRecipients" value="Caregiver">
+                <i class="fa-solid fa-user-plus method-icon" aria-hidden="true"></i>
+                <span>Send it to my caregiver</span>
+              </label>
+
+              <label class="check-card">
+                <input type="radio" name="summaryRecipients" value="Both">
+                <i class="fa-solid fa-users method-icon" aria-hidden="true"></i>
+                <span>Send it to both of us</span>
+              </label>
+            </div>
+          </fieldset>
+        </section>
+
+        <div class="button-row quiz-navigation">
+          <button class="button button-secondary" type="button" id="quizBack" disabled>
+            ← Back
+          </button>
+
+          <button class="button button-primary" type="button" id="quizNext">
+            Next →
+          </button>
+
+          <button class="button button-primary" type="submit" id="quizFinish" hidden>
+            Save preferences →
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- VIDEO VISIT -->
+    <section id="appointment" class="screen call-screen" hidden>
+
+      <div class="call-stage">
+        <div class="call-topbar">
+          <div class="call-logo">
+            <img src="images/logo.png" alt="BeyondWords" class="site-logo">
+          </div>
+          <button type="button" class="call-text-button" id="callHelp">
+            Need help?
+          </button>
+        </div>
+
+        <div class="provider-video" id="providerVideo">
+          <div class="provider-avatar" aria-hidden="true">Dr</div>
+          <h2>Your provider will appear here</h2>
+          <p>This is a video-call demonstration.</p>
+          <span class="video-demo-label">VIDEO PREVIEW</span>
+        </div>
+
+        <div class="self-view">
+          <div class="self-avatar" aria-hidden="true">You</div>
+          <span>You</span>
+        </div>
+
+        <p id="callMessage" class="call-message" role="status" aria-live="polite" hidden></p>
+
+        <button type="button" id="exitFocusButton" class="exit-focus-button"
+                aria-label="Exit focus mode" hidden>
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <!-- Floating communication popup -->
+      <div class="call-tool-panel" id="callToolPanel" hidden>
+        <div class="panel-heading">
+          <h2 id="callPanelTitle">Communication tool</h2>
+          <button type="button" class="panel-close" id="closeCallPanel"
+                  aria-label="Close communication tool">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="call-panel-content" data-panel="drawing" hidden>
+          <p>Draw or write to show what you mean.</p>
+
+          <canvas id="drawingCanvas" width="700" height="250"
+                  aria-label="Drawing area"></canvas>
+
+          <div class="toolbar">
+            <button type="button" class="button button-small" id="penButton">Pen</button>
+            <button type="button" class="button button-small" id="eraserButton">Eraser</button>
+            <button type="button" class="button button-small" id="undoButton">Undo</button>
+            <button type="button" class="button button-small" id="clearButton">Clear</button>
+            <button type="button" class="button button-primary" id="saveDrawingButton">
+              Save drawing
+            </button>
+          </div>
+
+          <p id="drawingStatus" class="helper-text" aria-live="polite">
+            Your drawing stays on this page until you leave or refresh.
+          </p>
+        </div>
+
+        <div class="call-panel-content" data-panel="transcript" hidden>
+          <p>Type a message to share with your provider.</p>
+
+          <label for="transcriptText">Your message</label>
+          <textarea id="transcriptText" rows="4" placeholder="Type your message here..."></textarea>
+
+          <button type="button" class="button button-primary" id="useTranscript">
+            Show message on call
+          </button>
+        </div>
+
+        <div class="call-panel-content" data-panel="notes" hidden>
+          <p>Write down anything you want to remember from your visit.</p>
+
+          <label for="visitNotes">My visit notes</label>
+          <textarea id="visitNotes" rows="6" placeholder="Write your notes here..."></textarea>
+        </div>
+      </div>
+
+      <!-- Bottom call toolbar -->
+      <div class="call-toolbar" aria-label="Communication and call controls">
+        <button type="button" class="call-tool" data-tool="drawing" aria-pressed="false">
+          <i class="fa-solid fa-pen" aria-hidden="true"></i>
+          <span>Draw or write</span>
+        </button>
+
+        <button type="button" class="call-tool" data-tool="transcript" aria-pressed="false">
+          <i class="fa-solid fa-comment-dots" aria-hidden="true"></i>
+          <span>Type a message</span>
+        </button>
+
+        <button type="button" class="call-tool" data-tool="notes" aria-pressed="false">
+          <i class="fa-solid fa-note-sticky" aria-hidden="true"></i>
+          <span>Visit notes</span>
+        </button>
+
+        <button type="button" class="call-tool" id="muteButton" aria-pressed="false">
+          <i class="fa-solid fa-microphone" aria-hidden="true"></i>
+          <span>Mute</span>
+        </button>
+
+        <button type="button" class="call-tool" id="cameraButton" aria-pressed="false">
+          <i class="fa-solid fa-video" aria-hidden="true"></i>
+          <span>Turn camera off</span>
+        </button>
+
+        <button type="button" class="call-tool" id="focusButton" aria-pressed="false">
+          <i class="fa-solid fa-expand" aria-hidden="true"></i>
+          <span>Focus mode</span>
+        </button>
+      </div>
+
+      <div class="end-call-container">
+        <button type="button" id="endCallButton" class="end-call-button">
+          <i class="fa-solid fa-phone-slash" aria-hidden="true"></i>
+          <span>End call</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
