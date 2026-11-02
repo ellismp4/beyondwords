@@ -120,6 +120,21 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
   color: #fff;
 }
 
+/* Demo link in the header (switches between patient and provider views) */
+.site-header .demo-link { min-height: 42px; padding: 8px 14px; font-size: 0.95rem; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* 3. LAYOUT & TYPE ----------------------------------------- */
 .page-shell {
   width: min(100% - 2rem, 1100px);
@@ -1058,6 +1073,158 @@ textarea::placeholder, input::placeholder { color: #827481; opacity: 1; }
   overflow-wrap: anywhere;
 }
 
+/* =========================================================
+   UPDATED PATIENT DASHBOARD
+   ========================================================= */
+
+.dashboard-section {
+  margin: 30px 0;
+}
+
+.dashboard-section > h2 {
+  margin-bottom: 8px;
+}
+
+.dashboard-section > p {
+  color: var(--muted);
+}
+
+.appointment-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.home-page .appointment-card,
+#returningDashboard .appointment-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 22px 24px;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--mauve);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+#returningDashboard .appointment-card h3 {
+  margin-bottom: 8px;
+}
+
+#returningDashboard .appointment-details p {
+  margin: 4px 0;
+  color: var(--muted);
+}
+
+#returningDashboard .appointment-card .button {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.demo-label {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 10px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: var(--lavender-light);
+  color: var(--plum-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.appointment-summary {
+  grid-column: 1 / -1;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--blue-light);
+}
+
+.appointment-summary h4 {
+  margin-bottom: 6px;
+  color: var(--plum-dark);
+}
+
+.appointment-summary p {
+  margin-bottom: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.profile-prompt {
+  padding: 24px;
+  border: 1px solid #E7D3E1;
+  border-radius: 18px;
+  background: var(--pink-light);
+}
+
+.profile-prompt p {
+  max-width: 700px;
+}
+
+/* Patient check-in spacing */
+#checkin .section-heading {
+  max-width: 760px;
+}
+
+#checkin .form-field {
+  display: grid;
+  gap: 8px;
+}
+
+#checkin .choice-card {
+  min-height: 150px;
+}
+
+#checkin .choice-card .mood-icon {
+  width: 72px;
+  height: 72px;
+}
+
+/* Provider review: make each patient response easy to scan */
+.provider-page .response-box {
+  padding: 18px;
+  margin-top: 14px;
+  border: 1px solid #DDE0EE;
+  border-radius: 12px;
+  background: #F3F4F9;
+}
+
+.provider-page .response-box strong {
+  color: var(--plum-dark);
+}
+
+.provider-page .response-box p {
+  overflow-wrap: anywhere;
+}
+
+.provider-page .response-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive appointment cards */
+@media (max-width: 650px) {
+  #returningDashboard .appointment-card {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    padding: 20px;
+  }
+
+  #returningDashboard .appointment-card .button {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .appointment-summary {
+    grid-column: auto;
+  }
+}
+
 /* 11. RESPONSIVE ------------------------------------------- */
 @media (max-width: 800px) {
   .page-shell { padding: 18px 20px 30px; }
@@ -1147,3 +1314,14 @@ textarea::placeholder, input::placeholder { color: #827481; opacity: 1; }
 
   .help-card:hover { transform: none; }
 }
+
+/* Demo reset */
+.demo-reset-container { display: flex; justify-content: center; margin: 32px 0 8px; }
+.demo-reset-button {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border: 1px dashed currentColor; border-radius: 999px;
+  background: transparent; color: inherit; font: inherit; font-size: .9rem;
+  cursor: pointer; opacity: .75;
+}
+.demo-reset-button:hover, .demo-reset-button:focus-visible { opacity: 1; }
+
