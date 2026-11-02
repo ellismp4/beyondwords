@@ -17,6 +17,12 @@
     <a href="index.html" class="logo-link" aria-label="Return to home page">
       <img src="images/logo.png" alt="BeyondWords" class="site-logo">
     </a>
+
+    <a href="provider.html" class="button button-secondary demo-link" target="_blank" rel="noopener">
+      <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
+      Open provider view
+      <span class="visually-hidden">(opens in a new tab)</span>
+    </a>
   </header>
 
   <main id="main" class="page-shell">
@@ -24,44 +30,69 @@
     <!-- HOME -->
     <div id="home" class="screen">
       <section class="welcome-section" id="welcome">
-        <div class="welcome-content">
-          <p class="eyebrow">COMMUNICATE YOUR WAY</p>
-          <h1>Welcome!</h1>
-          <h2>Let's get ready for your visit.</h2>
-          <p class="lead">
-            Take your time. This short questionnaire will help
-            your provider understand how you communicate best.
-          </p>
+  <div class="welcome-content" id="firstVisitWelcome">
+    <p class="eyebrow">COMMUNICATE YOUR WAY</p>
+    <h1>Welcome!</h1>
+    <h2>Let's get ready for your visit.</h2>
+    <p class="lead">
+      Tell us how you communicate best so your provider can help
+      make your visit more comfortable.
+    </p>
+    <div class="button-row">
+<button
+  type="button"
+  class="button button-primary"
+  id="setupProfileButton">
+  Set Up My Profile
+</button>
+    </div>
+  </div>
 
-          <div class="button-row">
-            <button class="button-primary" data-go="prepare">
-              Prepare for My Visit <span aria-hidden="true">→</span>
-            </button>
-          </div>
-        </div>
-      </section>
+  <div class="welcome-content" id="returningWelcome" hidden>
+    <p class="eyebrow">COMMUNICATE YOUR WAY</p>
+    <h1>Welcome back!</h1>
+    <p class="lead">
+      Review your appointments, revisit past summaries, or update
+      your communication preferences.
+    </p>
+  </div>
+</section>
 
-      <section class="quick-help">
-        <h2>How can we help?</h2>
-        <p>Choose an option below.</p>
+<!-- Returning-patient dashboard -->
+<section id="returningDashboard" hidden>
+  <section class="dashboard-section">
+    <h2>Upcoming appointments</h2>
+    <div id="upcomingAppointments" class="appointment-list">
+      <p>No upcoming appointments are listed yet.</p>
+    </div>
+  </section>
 
-        <div class="help-grid">
-          <a href="communication.html" class="help-card">
-            <span class="help-title">Communication Help</span>
-            <span class="help-description">Explore ways to communicate.</span>
-          </a>
+  <section class="dashboard-section">
+    <h2>Past visits</h2>
+    <p>Review the summaries from your previous appointments.</p>
+    <div id="pastAppointments" class="appointment-list">
+      <p>Your visit summaries will appear here after your appointments.</p>
+    </div>
+  </section>
 
-          <a href="profile.html" class="help-card">
-            <span class="help-title">My Profile</span>
-            <span class="help-description">View your communication preferences.</span>
-          </a>
+  <section class="dashboard-section profile-prompt">
+    <h2>Have your communication needs changed?</h2>
+    <p>
+      You can update your preferences at any time to help your provider
+      understand what works best for you.
+    </p>
+<button type="button" class="button button-secondary" id="editProfileButton">
+  Review My Profile
+</button>
+  </section>
 
-          <a href="help.html" class="help-card">
-            <span class="help-title">Help and Troubleshooting</span>
-            <span class="help-description">Learn how to use this website.</span>
-          </a>
-        </div>
-      </section>
+  <div class="demo-reset-container">
+  <button type="button" id="resetDemoDataButton" class="demo-reset-button">
+    <i class="fa-solid fa-rotate-left"></i>
+    Reset Demo Data
+  </button>
+</div>
+</section>
     </div>
 
     <!-- PREPARE FOR VISIT (questionnaire) -->
@@ -76,45 +107,15 @@
         <div class="progress-track">
           <span id="quizProgressFill"></span>
         </div>
-        <p id="quizProgressText" aria-live="polite">Step 1 of 4</p>
+        <p id="quizProgressText" aria-live="polite">Step 1 of 3</p>
       </div>
 
       <form id="prepareForm" class="card form-stack">
 
-        <!-- Question 1: mood -->
-        <section class="quiz-page" data-quiz-page="1">
-          <p class="eyebrow">QUESTION 1 OF 4</p>
-          <h3>How are you feeling today?</h3>
-          <p>Choose one answer.</p>
 
-          <fieldset>
-            <legend>How are you feeling?</legend>
-
-            <div class="choice-grid three">
-              <label class="choice-card">
-                <input type="radio" name="mood" value="Good">
-                <img src="images/good.png" alt="" class="mood-icon">
-                <strong>Good</strong>
-              </label>
-
-              <label class="choice-card">
-                <input type="radio" name="mood" value="Okay">
-                <img src="images/mid.png" alt="" class="mood-icon">
-                <strong>Okay</strong>
-              </label>
-
-              <label class="choice-card">
-                <input type="radio" name="mood" value="Not good">
-                <img src="images/bad.png" alt="" class="mood-icon">
-                <strong>Not good</strong>
-              </label>
-            </div>
-          </fieldset>
-        </section>
-
-        <!-- Question 2: communication methods -->
-        <section class="quiz-page" data-quiz-page="2" hidden>
-          <p class="eyebrow">QUESTION 2 OF 4</p>
+        <!-- Question 1: communication methods -->
+        <section class="quiz-page" data-quiz-page="1" hidden>
+          <p class="eyebrow">QUESTION 1 OF 3</p>
           <h3>What helps you communicate?</h3>
           <p>Choose all that help you.</p>
 
@@ -161,9 +162,9 @@
           </fieldset>
         </section>
 
-        <!-- Question 3: caregiver -->
-        <section class="quiz-page" data-quiz-page="3" hidden>
-          <p class="eyebrow">QUESTION 3 OF 4</p>
+        <!-- Question 2: caregiver -->
+        <section class="quiz-page" data-quiz-page="2" hidden>
+          <p class="eyebrow">QUESTION 2 OF 3</p>
           <h3>If you have a caregiver, would you like them to help during your visit?</h3>
 
           <fieldset>
@@ -199,8 +200,8 @@
         </section>
 
         <!-- Question 4: visit summary -->
-        <section class="quiz-page" data-quiz-page="4" hidden>
-          <p class="eyebrow">QUESTION 4 OF 4</p>
+        <section class="quiz-page" data-quiz-page="3" hidden>
+          <p class="eyebrow">QUESTION 3 OF 3</p>
           <h3>Would you like a summary of your visit?</h3>
           <p>
             A summary can help you remember what you talked about
@@ -248,7 +249,8 @@
           </fieldset>
         </section>
 
-        <div class="button-row quiz-navigation">
+        
+<div class="button-row quiz-navigation">
           <button class="button button-secondary" type="button" id="quizBack" disabled>
             ← Back
           </button>
@@ -258,11 +260,74 @@
           </button>
 
           <button class="button button-primary" type="submit" id="quizFinish" hidden>
-            Save preferences →
+            Save My Profile →
           </button>
         </div>
       </form>
     </section>
+
+    <!-- BEFORE EACH APPOINTMENT -->
+<section class="screen" id="checkin" hidden>
+  <div class="section-heading">
+    <p class="eyebrow">BEFORE YOUR APPOINTMENT</p>
+    <h2>How are you feeling today?</h2>
+    <p>
+      Let your provider know how you feel and what you would like
+      to talk about. You can take your time.
+    </p>
+  </div>
+
+  <form id="checkinForm" class="card form-stack">
+    <fieldset>
+      <legend>How are you feeling today?</legend>
+
+      <div class="choice-grid three">
+        <label class="choice-card">
+          <input type="radio" name="todayMood" value="Good" required>
+          <img src="images/good.png" alt="" class="mood-icon">
+          <strong>Good</strong>
+        </label>
+
+        <label class="choice-card">
+          <input type="radio" name="todayMood" value="Okay">
+          <img src="images/mid.png" alt="" class="mood-icon">
+          <strong>Okay</strong>
+        </label>
+
+        <label class="choice-card">
+          <input type="radio" name="todayMood" value="Not good">
+          <img src="images/bad.png" alt="" class="mood-icon">
+          <strong>Not good</strong>
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="form-field">
+      <label for="todayTopics">
+        What would you like to discuss today?
+      </label>
+      <p class="helper-text">
+        You can type a few words, a question, or anything you want
+        your provider to know.
+      </p>
+      <textarea id="todayTopics" name="todayTopics" rows="4"
+        placeholder="I would like to talk about..."></textarea>
+    </div>
+
+    <div class="button-row">
+      <button type="button" class="button button-secondary"
+        id="checkinBackButton">
+        ← Back
+      </button>
+      <button type="submit" class="button button-primary">
+        Begin Appointment →
+      </button>
+    </div>
+  </form>
+</section>
+
+
+        
 
     <!-- VIDEO VISIT -->
     <section id="appointment" class="screen call-screen" hidden>
@@ -391,3 +456,4 @@
   </main>
 </body>
 </html>
+
