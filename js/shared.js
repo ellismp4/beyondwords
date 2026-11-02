@@ -126,3 +126,4 @@ window.BW = (() => {
     bindToggle, initToolPanel, showMessage
   };
 })();
+
