@@ -7,7 +7,9 @@
   <link rel="icon" href="images/favicon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
   <script src="js/shared.js" defer></script>
+    <script src="js/live.js" defer></script>
   <script src="js/provider.js" defer></script>
 </head>
 <body class="provider-page">
@@ -18,14 +20,14 @@
       <img src="images/logo.png" alt="BeyondWords" class="site-logo">
     </a>
 
-    <a href="index.html" class="button button-secondary demo-link" target="_blank" rel="noopener">
-      <i class="fa-solid fa-user" aria-hidden="true"></i>
-      Open patient view
-      <span class="visually-hidden">(opens in a new tab)</span>
-    </a>
+    <nav class="header-nav" aria-label="Main">
+      <button type="button" class="nav-link" data-nav-current="dashboard" id="providerHomeNav" aria-current="page">Home</button>
+      <button type="button" class="nav-link" data-nav-current="troubleshoot" data-open-troubleshoot>Troubleshooting</button>
+    </nav>
   </header>
 
   <main id="main" class="page-shell">
+    <p id="providerAlert" class="profile-status" role="status" aria-live="polite" hidden></p>
 
     <!-- DASHBOARD -->
     <section class="screen" id="dashboard">
@@ -35,32 +37,44 @@
         Prepare for visits and support each patient's communication needs.
       </p>
 
+      <p class="now-line">
+        <i class="fa-regular fa-calendar-check" aria-hidden="true"></i>
+        <span id="nextVisitLine">Today's visit</span>
+      </p>
+
+
       <div class="metric-row">
         <div class="metric">
-          <span class="metric-number">1</span>
-          <span class="metric-label">Today's Visits</span>
+          <span class="metric-number" id="metricToday">0</span>
+          <span class="metric-label">Visits today</span>
         </div>
         <div class="metric">
-          <span class="metric-number">10:30</span>
-          <span class="metric-label">Next Appointment</span>
+          <span class="metric-number" id="metricWaiting">0</span>
+          <span class="metric-label">Waiting now</span>
+        </div>
+        <div class="metric">
+          <span class="metric-number" id="metricNext">--</span>
+          <span class="metric-label">Next appointment</span>
         </div>
       </div>
 
       <div class="section-heading">
-        <h2>Upcoming appointment</h2>
+        <h2>Today's appointment</h2>
       </div>
 
-      <div class="card appointment-card">
+      <div class="card appointment-card" id="dashCard">
+        <p class="dash-empty" id="dashEmpty" hidden>No upcoming appointments.</p>
         <div>
           <p class="appointment-time">
             <i class="fa-regular fa-calendar" aria-hidden="true"></i>
-            Today's demo appointment
+            <span id="dashTime"></span>
           </p>
+          <p><span class="status-chip status-scheduled" id="dashStatus"><i class="fa-solid fa-calendar" aria-hidden="true"></i> Scheduled</span></p>
 
           <div class="patient-row">
             <div class="avatar" aria-hidden="true">P</div>
             <div>
-              <h3>Demo patient</h3>
+              <h3 id="dashPatientName">Demo patient</h3>
               <p class="muted">Aphasia communication support</p>
             </div>
           </div>
@@ -73,6 +87,18 @@
         <button type="button" class="button button-primary" data-go="patient">
           Review patient
           <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="section-heading">
+        <h2>Completed visits</h2>
+      </div>
+      <div class="completed-list" id="completedList" role="list"></div>
+
+      <div class="demo-reset-container">
+        <button type="button" id="providerResetDemo" class="demo-reset-button">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+          Reset demo visit
         </button>
       </div>
     </section>
@@ -90,7 +116,11 @@
           <div class="patient-row">
             <div class="avatar" aria-hidden="true">P</div>
             <div>
-              <h2>Demo patient</h2>
+              <h2 id="patientName">Demo patient</h2>
+              <p class="appointment-time" style="margin: 4px 0;">
+                <i class="fa-regular fa-clock" aria-hidden="true"></i>
+                <span id="patientVisitTime">Today</span>
+              </p>
               <p class="muted" id="patientStatus" role="status" aria-live="polite">
                 Waiting for the patient to complete their profile.
               </p>
@@ -176,8 +206,8 @@
         </p>
 
         <div class="workspace-toolbar">
-          <button type="button" class="button button-primary" data-go="call">
-            Join call
+          <button type="button" class="button button-primary" id="providerJoin">
+            Join visit
             <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
           </button>
         </div>
@@ -185,6 +215,169 @@
     </section>
 
     
+
+    <!-- COMPLETED VISIT SUMMARY REVIEW -->
+    <section class="screen" id="summaryReview" hidden>
+      <div class="summary-actions no-print">
+        <button type="button" class="button button-secondary" id="summaryReviewBack">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          Back to workspace
+        </button>
+        <button type="button" class="button button-secondary" id="reviewRead">
+          <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Read aloud
+        </button>
+        <button type="button" class="button button-secondary" id="reviewPrint">
+          <i class="fa-solid fa-print" aria-hidden="true"></i> Print
+        </button>
+        <button type="button" class="button button-secondary" id="reviewPdf">
+          <i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Download PDF
+        </button>
+      </div>
+      <p id="reviewStatusNote" class="helper-text no-print" role="status" aria-live="polite"></p>
+
+      <article id="summaryDocument" class="summary-document" aria-label="After-visit summary"></article>
+
+    </section>
+
+    <!-- DEVICE CHECK -->
+    <section class="screen" id="devicecheck" hidden>
+      <p class="eyebrow">BEFORE YOU JOIN</p>
+      <h1>Check your camera and sound</h1>
+      <p class="intro">Make sure the patient can see and hear you clearly.</p>
+
+      <div class="check-layout">
+        <div class="check-preview card">
+          <div class="check-video-frame">
+            <video id="checkVideo" autoplay muted playsinline hidden></video>
+            <div id="checkPlaceholder" class="check-placeholder">
+              <i class="fa-solid fa-video" aria-hidden="true"></i>
+              <p>Your camera picture will show here.</p>
+            </div>
+          </div>
+          <div class="meter" role="img" aria-label="Microphone level">
+            <span class="meter-label">Microphone level</span>
+            <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+          </div>
+          <button type="button" class="button button-primary" id="checkStart">
+            <span>Check my camera and microphone</span>
+          </button>
+        </div>
+
+        <ul class="check-list card" aria-label="Device check results">
+          <li class="check-row" data-check="camera" data-state="pending">
+            <i class="fa-solid fa-video check-icon" aria-hidden="true"></i>
+            <div class="check-body"><strong>Camera</strong>
+              <p class="check-detail">Press "Check my camera and microphone".</p></div>
+            <span class="check-state">Not checked yet</span>
+          </li>
+          <li class="check-row" data-check="microphone" data-state="pending">
+            <i class="fa-solid fa-microphone check-icon" aria-hidden="true"></i>
+            <div class="check-body"><strong>Microphone</strong>
+              <p class="check-detail">A bar will move when you speak.</p></div>
+            <span class="check-state">Not checked yet</span>
+          </li>
+          <li class="check-row" data-check="speakers" data-state="pending">
+            <i class="fa-solid fa-volume-high check-icon" aria-hidden="true"></i>
+            <div class="check-body"><strong>Speakers</strong>
+              <p class="check-detail">Play a sound and tell us if you can hear it.</p>
+              <div class="toolbar">
+                <button type="button" class="button button-small" id="checkSpeakerPlay">Play test sound</button>
+                <button type="button" class="button button-small" id="checkSpeakerYes" hidden>I heard it</button>
+                <button type="button" class="button button-small" id="checkSpeakerNo" hidden>I did not hear it</button>
+              </div></div>
+            <span class="check-state">Not checked yet</span>
+          </li>
+          <li class="check-row" data-check="connection" data-state="pending">
+            <i class="fa-solid fa-wifi check-icon" aria-hidden="true"></i>
+            <div class="check-body"><strong>Internet connection</strong>
+              <p class="check-detail">Checking...</p></div>
+            <span class="check-state">Not checked yet</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="button-row check-actions">
+        <button type="button" class="button button-secondary" id="checkBack">← Back</button>
+        <button type="button" class="button button-text" data-open-troubleshoot>Something is not working</button>
+        <button type="button" class="button button-primary" id="checkContinue">Join visit →</button>
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="screen" id="troubleshoot" hidden>
+      <p class="eyebrow">HELP</p>
+      <h1>Troubleshooting</h1>
+      <p class="intro">
+        Quick fixes for common call problems. Your visit stays open while you troubleshoot.
+      </p>
+
+      <div class="card sound-test">
+        <div>
+          <h2>Check your sound</h2>
+          <p>Press the button. You should hear a short spoken sentence.</p>
+        </div>
+        <button type="button" class="button button-primary" id="soundTestButton">
+          <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+          Play test sound
+        </button>
+        <p id="soundTestStatus" class="helper-text" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="trouble-list">
+        <details class="trouble-item" open>
+          <summary><i class="fa-solid fa-ear-listen" aria-hidden="true"></i> I can't hear the patient</summary>
+          <ol>
+            <li>Check your device volume and that it is not muted.</li>
+            <li>Check headphones or speakers are connected.</li>
+            <li>Ask the patient to type a message or use the gestures while you fix it.</li>
+          </ol>
+        </details>
+
+        <details class="trouble-item">
+          <summary><i class="fa-solid fa-microphone-slash" aria-hidden="true"></i> The patient can't hear me</summary>
+          <ol>
+            <li>Make sure your Mute button says "Mute", not "Unmute".</li>
+            <li>Allow microphone access if the browser asks.</li>
+            <li>Use "Type a message" to share what you were saying.</li>
+          </ol>
+        </details>
+
+        <details class="trouble-item">
+          <summary><i class="fa-solid fa-video-slash" aria-hidden="true"></i> Video is not working</summary>
+          <ol>
+            <li>Check the camera button says "Turn camera off".</li>
+            <li>Allow camera access and close other apps using the camera.</li>
+            <li>Continue by voice or by typing if video cannot be fixed.</li>
+          </ol>
+        </details>
+
+        <details class="trouble-item">
+          <summary><i class="fa-solid fa-wifi" aria-hidden="true"></i> The call is slow or freezing</summary>
+          <ol>
+            <li>Move closer to your router or switch to a wired connection.</li>
+            <li>Pause other streaming or large downloads.</li>
+            <li>Turn your camera off to reduce bandwidth.</li>
+            <li>Refresh the page. Notes and the patient profile are saved.</li>
+          </ol>
+        </details>
+
+        <details class="trouble-item">
+          <summary><i class="fa-solid fa-hands" aria-hidden="true"></i> A communication tool is missing</summary>
+          <ol>
+            <li>Tools shown during the call match the patient's profile.</li>
+            <li>The patient can change them by editing their profile on their page.</li>
+            <li>Updates appear here when the patient saves them.</li>
+          </ol>
+        </details>
+      </div>
+
+      <div class="button-row trouble-actions">
+        <button type="button" class="button button-primary" id="troubleshootBack">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span id="troubleshootBackLabel">Go back</span>
+        </button>
+      </div>
+    </section>
 
     <!-- PROVIDER CALL INTERFACE -->
     <section id="call" class="screen call-screen" hidden>
@@ -195,22 +388,59 @@
             <img src="images/logo.png" alt="BeyondWords" class="site-logo">
           </a>
 
+          <div class="call-status" role="group" aria-label="Call status">
+            <span class="call-pill" id="callPill" data-state="waiting">
+              <span class="pill-dot" aria-hidden="true"></span>
+              <span id="callPillText">Waiting for patient</span>
+            </span>
+            <span class="call-pill" id="callVisitTime" data-state="visit">
+              <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+              <span id="callVisitTimeText">Visit time</span>
+            </span>
+            <span class="call-timer">
+              <i class="fa-regular fa-clock" aria-hidden="true"></i>
+              <span class="visually-hidden">Call length </span><span id="callTimer">00:00</span>
+            </span>
+            <span class="conn" data-conn data-level="good" role="img" aria-label="Connection: Good">
+              <i class="fa-solid fa-signal" aria-hidden="true"></i>
+              <span class="conn-text">Good</span>
+            </span>
+            <span class="private-label"><i class="fa-solid fa-lock" aria-hidden="true"></i> Private visit</span>
+          </div>
+
           <button type="button" class="call-text-button" id="callHelp">
             Need help?
           </button>
         </div>
 
+        <div class="reconnect-banner" data-reconnect role="alert" hidden>
+          <i class="fa-solid fa-rotate fa-spin" aria-hidden="true"></i>
+          Reconnecting... your internet connection was lost.
+        </div>
+
+        <p class="call-toast" id="callToast" role="status" aria-live="polite" hidden></p>
+
         <div class="provider-video" id="providerVideo">
+          <video id="remoteVideo" class="remote-video" autoplay playsinline hidden></video>
+          <p class="remote-tag" id="remoteTag" hidden>
+            <span id="remoteTagName">Your patient</span>
+            <span class="remote-muted" id="remoteMuted" hidden><i class="fa-solid fa-microphone-slash" aria-hidden="true"></i> Muted</span>
+          </p>
           <div class="provider-avatar" aria-hidden="true">DP</div>
-          <h2>Your patient will appear here</h2>
-          <p>This is a demonstration.</p>
+          <h2 id="callPatientName">Waiting for your patient</h2>
+          <p id="callPatientNote">The patient will appear here when they join.</p>
           <span class="video-demo-label">PROVIDER VIEW</span>
         </div>
 
         <div class="self-view">
+          <video id="selfVideo" autoplay muted playsinline hidden></video>
           <div class="self-avatar" aria-hidden="true">You</div>
-          <span>You</span>
+          <span class="self-name">You</span>
+          <span class="self-off" hidden>Camera off</span>
+          <span class="self-muted" id="selfMuted" hidden><i class="fa-solid fa-microphone-slash" aria-hidden="true"></i> Muted</span>
         </div>
+
+        <p id="callMessage" class="call-message" role="status" aria-live="polite" hidden></p>
       </div>
 
       <!-- Floating communication popup -->
@@ -223,7 +453,12 @@
           </button>
         </div>
 
-        <div class="call-panel-content" data-panel="message" hidden>
+        <div class="call-panel-content" data-panel="gesture" data-feature="gesture" hidden>
+          <p>Tap a picture to show the patient what you mean.</p>
+          <div class="gesture-grid" id="providerGestureBank" role="group" aria-label="Gestures"></div>
+        </div>
+
+        <div class="call-panel-content" data-panel="message" data-feature="message" hidden>
           <p>Write a message to share during the visit.</p>
 
           <label for="providerMessage">Your message</label>
@@ -233,8 +468,33 @@
             Show message on call
           </button>
 
+          <div class="tts-controls" data-feature="tts" hidden>
+            <label for="providerSpeed">Voice speed</label>
+            <select id="providerSpeed">
+              <option value="0.7">Slow</option>
+              <option value="0.9" selected>Normal</option>
+              <option value="1.1">Fast</option>
+            </select>
+
+            <div class="toolbar">
+              <button type="button" class="button button-secondary" id="providerReadAloud">
+                <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+                Read aloud
+              </button>
+            </div>
+          </div>
+
           <p id="providerMessagePreview" class="provider-message-preview" hidden></p>
+          <p id="providerSpeechStatus" class="helper-text" role="status" aria-live="polite"></p>
         </div>
+
+        <div class="call-panel-content" data-panel="drawing" hidden>
+          <p>This is what your patient is drawing.</p>
+          <img id="remoteDrawing" class="remote-drawing" alt="Patient's drawing" hidden>
+          <p id="remoteDrawingEmpty" class="helper-text">No drawing yet. It appears here as your patient draws.</p>
+        </div>
+
+        <div class="call-panel-content" data-panel="summary" id="summaryPanel" hidden></div>
 
         <div class="call-panel-content" data-panel="notes" hidden>
           <p>Write notes to help you remember important details.</p>
@@ -262,9 +522,19 @@
 
       <!-- Bottom call toolbar -->
       <div class="call-toolbar" aria-label="Communication and call controls">
-        <button type="button" class="call-tool" data-tool="message" aria-pressed="false">
+        <button type="button" class="call-tool" data-tool="gesture" data-feature="gesture" aria-pressed="false" hidden>
+          <i class="fa-solid fa-hands" aria-hidden="true"></i>
+          <span>Gestures</span>
+        </button>
+
+        <button type="button" class="call-tool" data-tool="message" data-feature="message" aria-pressed="false" hidden>
           <i class="fa-solid fa-comment-dots" aria-hidden="true"></i>
           <span>Type a message</span>
+        </button>
+
+        <button type="button" class="call-tool" data-tool="drawing" aria-pressed="false">
+          <i class="fa-solid fa-pen" aria-hidden="true"></i>
+          <span>Patient drawing</span>
         </button>
 
         <button type="button" class="call-tool" data-tool="notes" aria-pressed="false">
@@ -282,9 +552,9 @@
           <span>Turn camera off</span>
         </button>
 
-        <button type="button" class="call-tool" data-go="summary">
+        <button type="button" class="call-tool" data-tool="summary" aria-pressed="false">
           <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
-          <span>After-visit summary</span>
+          <span>Visit summary</span>
         </button>
       </div>
 
@@ -297,6 +567,26 @@
     </section>
 
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="BeyondWords" class="footer-logo">
+        <p>Communication support for video visits, designed for people living with aphasia.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><button type="button" class="footer-link" data-open-troubleshoot>Troubleshooting</button></li>
+          <li><a class="footer-link" href="index.html" target="_blank" rel="noopener">Patient Login<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        </ul>
+      </nav>
+
+      <p class="footer-note">
+        &copy; 2026 BeyondWords
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
 
