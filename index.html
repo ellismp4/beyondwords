@@ -6,7 +6,9 @@
   <title>BeyondWords</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
   <script src="js/shared.js" defer></script>
+    <script src="js/live.js" defer></script>
   <script src="js/app.js" defer></script>
   <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
@@ -18,72 +20,93 @@
       <img src="images/logo.png" alt="BeyondWords" class="site-logo">
     </a>
 
-    <a href="provider.html" class="button button-secondary demo-link" target="_blank" rel="noopener">
-      <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
-      Open provider view
-      <span class="visually-hidden">(opens in a new tab)</span>
-    </a>
+    <nav class="header-nav" id="headerNav" aria-label="Main">
+      <button type="button" class="nav-link" data-nav="home">Home</button>
+      <button type="button" class="nav-link" data-nav="visits" data-returning-only hidden>My visits</button>
+      <button type="button" class="nav-link" data-nav-current="troubleshoot" data-open-troubleshoot>Troubleshooting</button>
+    </nav>
   </header>
 
   <main id="main" class="page-shell">
 
     <!-- HOME -->
     <div id="home" class="screen">
+      <p id="homeStatus" class="profile-status" role="status" aria-live="polite" hidden></p>
+
       <section class="welcome-section" id="welcome">
   <div class="welcome-content" id="firstVisitWelcome">
-    <p class="eyebrow">COMMUNICATE YOUR WAY</p>
-    <h1>Welcome!</h1>
-    <h2>Let's get ready for your visit.</h2>
+    <p class="eyebrow">VIDEO VISITS FOR PEOPLE WITH APHASIA</p>
+    <h1>Talk with your provider in the way that works for you.</h1>
     <p class="lead">
-      Tell us how you communicate best so your provider can help
-      make your visit more comfortable.
+      BeyondWords adds simple tools to your video visit: pictures to tap,
+      drawing, typing, and a voice that reads your words aloud.
     </p>
     <div class="button-row">
-<button
-  type="button"
-  class="button button-primary"
-  id="setupProfileButton">
-  Set Up My Profile
-</button>
+      <button type="button" class="button button-primary" id="setupProfileButton">
+        Set up my profile
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 
   <div class="welcome-content" id="returningWelcome" hidden>
     <p class="eyebrow">COMMUNICATE YOUR WAY</p>
-    <h1>Welcome back!</h1>
+    <h1>Talk with your provider in the way that works for you.</h1>
     <p class="lead">
       Review your appointments, revisit past summaries, or update
       your communication preferences.
     </p>
+
+    <p class="hero-profile">
+      <span>Have your communication needs changed?</span>
+      <button type="button" class="pill-link" id="editProfileButton">
+        Edit my profile
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+      </button>
+    </p>
+  </div>
+
+  <div class="hero-art">
+    <img src="images/hero.png" width="480" height="380"
+         alt="A video visit on a tablet, with a speech bubble and simple tools for typing, drawing, gestures and spoken text.">
   </div>
 </section>
 
-<!-- Returning-patient dashboard -->
+<!-- How it works (first visit only) -->
+<section class="how-it-works" id="howItWorks" aria-labelledby="howTitle">
+  <h2 id="howTitle">How it works</h2>
+  <ol class="steps-grid">
+    <li class="step-card">
+      <span class="step-number" aria-hidden="true">1</span>
+      <h3>Tell us what helps</h3>
+      <p>Answer three short questions and pick the tools you want.</p>
+    </li>
+    <li class="step-card">
+      <span class="step-number" aria-hidden="true">2</span>
+      <h3>Check in</h3>
+      <p>Before each visit, share how you feel and what you want to talk about.</p>
+    </li>
+    <li class="step-card">
+      <span class="step-number" aria-hidden="true">3</span>
+      <h3>Join your visit</h3>
+      <p>Your chosen tools appear on the call. Nothing extra to find.</p>
+    </li>
+  </ol>
+</section>
+
+<!-- Returning-patient dashboard: just the next visit -->
 <section id="returningDashboard" hidden>
   <section class="dashboard-section">
-    <h2>Upcoming appointments</h2>
-    <div id="upcomingAppointments" class="appointment-list">
+    <h2>Your next visit</h2>
+    <div id="nextVisit" class="appointment-list">
       <p>No upcoming appointments are listed yet.</p>
     </div>
-  </section>
-
-  <section class="dashboard-section">
-    <h2>Past visits</h2>
-    <p>Review the summaries from your previous appointments.</p>
-    <div id="pastAppointments" class="appointment-list">
-      <p>Your visit summaries will appear here after your appointments.</p>
-    </div>
-  </section>
-
-  <section class="dashboard-section profile-prompt">
-    <h2>Have your communication needs changed?</h2>
-    <p>
-      You can update your preferences at any time to help your provider
-      understand what works best for you.
+    <p class="see-all">
+      <button type="button" class="pill-link" data-nav="visits">
+        See all my visits
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+      </button>
     </p>
-<button type="button" class="button button-secondary" id="editProfileButton">
-  Review My Profile
-</button>
   </section>
 
   <div class="demo-reset-container">
@@ -95,12 +118,34 @@
 </section>
     </div>
 
+    <!-- MY VISITS (all upcoming and past visits) -->
+    <section class="screen" id="visits" hidden>
+      <p id="visitsStatus" class="profile-status" role="status" aria-live="polite" hidden></p>
+      <p class="eyebrow">MY VISITS</p>
+      <h1>My visits</h1>
+
+      <section class="dashboard-section">
+        <h2>Upcoming visits</h2>
+        <div id="upcomingAppointments" class="appointment-list">
+          <p>No upcoming appointments are listed yet.</p>
+        </div>
+      </section>
+
+      <section class="dashboard-section">
+        <h2>Past visits</h2>
+        <p>Review the summaries from your previous appointments.</p>
+        <div id="pastAppointments" class="appointment-list">
+          <p>Your visit summaries will appear here after your appointments.</p>
+        </div>
+      </section>
+    </section>
+
     <!-- PREPARE FOR VISIT (questionnaire) -->
     <section class="screen" id="prepare" hidden>
       <div class="section-heading">
-        <p class="eyebrow">BEFORE YOUR VISIT</p>
-        <h2>Let's get ready for your visit.</h2>
-        <p>Choose your answers. You can go back at any time.</p>
+        <p class="eyebrow" id="prepareEyebrow">BEFORE YOUR VISIT</p>
+        <h2 id="prepareTitle">Let's get ready for your visit.</h2>
+        <p id="prepareIntro">Choose your answers. You can go back at any time.</p>
       </div>
 
       <div class="quiz-progress">
@@ -116,8 +161,9 @@
         <!-- Question 1: communication methods -->
         <section class="quiz-page" data-quiz-page="1" hidden>
           <p class="eyebrow">QUESTION 1 OF 3</p>
-          <h3>What helps you communicate?</h3>
-          <p>Choose all that help you.</p>
+          <h3>What helps you talk?</h3>
+          <p>Pick all that help.</p>
+          <p class="helper-text">Your provider will see your answers.</p>
 
           <fieldset>
             <legend>My communication methods</legend>
@@ -126,37 +172,37 @@
               <label class="check-card">
                 <input type="checkbox" name="methods" value="Speaking">
                 <i class="fa-solid fa-comment-dots method-icon" aria-hidden="true"></i>
-                <span>Speaking</span>
+                <span class="method-text"><span class="method-name">Speaking</span><small>Talk out loud</small></span>
               </label>
 
               <label class="check-card">
                 <input type="checkbox" name="methods" value="Writing or typing">
                 <i class="fa-solid fa-pen-to-square method-icon" aria-hidden="true"></i>
-                <span>Writing or typing</span>
+                <span class="method-text"><span class="method-name">Writing or typing</span><small>Type messages</small></span>
               </label>
 
               <label class="check-card">
-                <input type="checkbox" name="methods" value="Pictures or symbols">
-                <i class="fa-solid fa-images method-icon" aria-hidden="true"></i>
-                <span>Pictures or symbols</span>
-              </label>
-
-              <label class="check-card">
-                <input type="checkbox" name="methods" value="Gestures or drawing">
-                <i class="fa-solid fa-hand method-icon" aria-hidden="true"></i>
-                <span>Gestures or drawing</span>
-              </label>
-
-              <label class="check-card">
-                <input type="checkbox" name="methods" value="Extra time">
-                <i class="fa-regular fa-clock method-icon" aria-hidden="true"></i>
-                <span>Extra time</span>
+                <input type="checkbox" name="methods" value="Drawing">
+                <i class="fa-solid fa-pencil method-icon" aria-hidden="true"></i>
+                <span class="method-text"><span class="method-name">Drawing</span><small>Draw pictures</small></span>
               </label>
 
               <label class="check-card">
                 <input type="checkbox" name="methods" value="Support person">
                 <i class="fa-solid fa-user-group method-icon" aria-hidden="true"></i>
-                <span>Support person</span>
+                <span class="method-text"><span class="method-name">Support person</span><small>Someone helps me</small></span>
+              </label>
+
+              <label class="check-card">
+                <input type="checkbox" name="methods" value="Gestures">
+                <i class="fa-solid fa-hands method-icon" aria-hidden="true"></i>
+                <span class="method-text"><span class="method-name">Gestures</span><small>Tap picture buttons</small></span>
+              </label>
+
+              <label class="check-card">
+                <input type="checkbox" name="methods" value="Text to speech">
+                <i class="fa-solid fa-volume-high method-icon" aria-hidden="true"></i>
+                <span class="method-text"><span class="method-name">Text to speech</span><small>Computer says my words</small></span>
               </label>
             </div>
           </fieldset>
@@ -203,10 +249,6 @@
         <section class="quiz-page" data-quiz-page="3" hidden>
           <p class="eyebrow">QUESTION 3 OF 3</p>
           <h3>Would you like a summary of your visit?</h3>
-          <p>
-            A summary can help you remember what you talked about
-            and what happens next.
-          </p>
 
           <fieldset>
             <legend>Would you like a summary?</legend>
@@ -255,6 +297,14 @@
             ← Back
           </button>
 
+          <button class="button button-quiet" type="button" id="quizCancelEdit" hidden>
+            Cancel
+          </button>
+
+          <button class="button button-primary" type="submit" id="quizSaveEdit" hidden>
+            Save changes
+          </button>
+
           <button class="button button-primary" type="button" id="quizNext">
             Next →
           </button>
@@ -269,17 +319,19 @@
     <!-- BEFORE EACH APPOINTMENT -->
 <section class="screen" id="checkin" hidden>
   <div class="section-heading">
-    <p class="eyebrow">BEFORE YOUR APPOINTMENT</p>
-    <h2>How are you feeling today?</h2>
+    <p class="eyebrow">STEP 1 OF 3 · CHECK-IN</p>
+    <h2>Tell your provider how you're feeling</h2>
     <p>
-      Let your provider know how you feel and what you would like
-      to talk about. You can take your time.
+      Your provider will see your answers before the visit starts.
+      This helps them adjust how they talk with you, for example by
+      going slower or taking breaks. You can take your time.
     </p>
   </div>
 
   <form id="checkinForm" class="card form-stack">
     <fieldset>
       <legend>How are you feeling today?</legend>
+      <p class="helper-text">Pick the emotion that fits best. There is no wrong answer.</p>
 
       <div class="choice-grid three">
         <label class="choice-card">
@@ -320,7 +372,7 @@
         ← Back
       </button>
       <button type="submit" class="button button-primary">
-        Begin Appointment →
+        Continue to device check →
       </button>
     </div>
   </form>
@@ -328,6 +380,214 @@
 
 
         
+
+    <!-- DEVICE CHECK -->
+    <section class="screen" id="devicecheck" hidden>
+      <div class="section-heading">
+        <p class="eyebrow">STEP 2 OF 3 · DEVICE CHECK</p>
+        <h2>Let's check your camera and sound</h2>
+        <p>This takes about a minute. You can skip anything that does not work and still join.</p>
+      </div>
+
+      <div class="check-layout">
+        <div class="check-preview card">
+          <div class="check-video-frame">
+            <video id="checkVideo" autoplay muted playsinline hidden></video>
+            <div id="checkPlaceholder" class="check-placeholder">
+              <i class="fa-solid fa-video" aria-hidden="true"></i>
+              <p>Your camera picture will show here.</p>
+            </div>
+          </div>
+          <div class="meter" role="img" aria-label="Microphone level">
+            <span class="meter-label">Microphone level</span>
+            <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+          </div>
+          <button type="button" class="button button-primary" id="checkStart">
+            <span>Check my camera and microphone</span>
+          </button>
+        </div>
+
+        <ul class="check-list card" aria-label="Device check results">
+          <li class="check-row" data-check="camera" data-state="pending">
+            <i class="fa-solid fa-video check-icon" aria-hidden="true"></i>
+            <div class="check-body"><strong>Camera</strong>
+              <p class="check-detail">Press "Check my camera and microphone".</p></div>
+            <span class="check-state">Not checked yet</span>
+          </li>
+          <li class="check-row" data-check="microphone" data-state="pending">
+            <i class="fa-solid fa-microphone check-icon" aria-hidden="true"></i>
+            <div class="check-body"><strong>Microphone</strong>
+              <p class="check-detail">A bar will move when you speak.</p></div>
+            <span class="check-state">Not checked yet</span>
+          </li>
+          <li class="check-row" data-check="speakers" data-state="pending">
+            <i class="fa-solid fa-volume-high check-icon" aria-hidden="true"></i>
+            <div class="check-body"><strong>Speakers</strong>
+              <p class="check-detail">Play a sound and tell us if you can hear it.</p>
+              <div class="toolbar">
+                <button type="button" class="button button-small" id="checkSpeakerPlay">Play test sound</button>
+                <button type="button" class="button button-small" id="checkSpeakerYes" hidden>I heard it</button>
+                <button type="button" class="button button-small" id="checkSpeakerNo" hidden>I did not hear it</button>
+              </div></div>
+            <span class="check-state">Not checked yet</span>
+          </li>
+          <li class="check-row" data-check="connection" data-state="pending">
+            <i class="fa-solid fa-wifi check-icon" aria-hidden="true"></i>
+            <div class="check-body"><strong>Internet connection</strong>
+              <p class="check-detail">Checking...</p></div>
+            <span class="check-state">Not checked yet</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="button-row check-actions">
+        <button type="button" class="button button-secondary" id="checkBack">← Back</button>
+        <button type="button" class="button button-text" data-open-troubleshoot>Something is not working</button>
+        <button type="button" class="button button-primary" id="checkContinue">Go to waiting room →</button>
+      </div>
+    </section>
+
+    <!-- WAITING ROOM -->
+    <section class="screen" id="waiting" hidden>
+      <div class="waiting-card card">
+        <p class="eyebrow">STEP 3 OF 3 · WAITING ROOM</p>
+        <div class="waiting-pulse" aria-hidden="true"><i class="fa-solid fa-user-doctor"></i></div>
+        <h2 id="waitingTitle">You're in the waiting room</h2>
+        <p id="waitingText" class="waiting-text">Your provider will let you in soon. You do not need to do anything.</p>
+
+        <dl class="waiting-details">
+          <div><dt>Visit</dt><dd id="waitingVisit"></dd></div>
+          <div><dt>Provider</dt><dd id="waitingProvider"></dd></div>
+          <div><dt>Time</dt><dd id="waitingTime"></dd></div>
+        </dl>
+
+        <p class="waiting-tip"><i class="fa-solid fa-lock" aria-hidden="true"></i> Private visit. Only you and your provider can join.</p>
+
+
+        <div class="button-row">
+          <button type="button" class="button button-secondary" id="waitingLeave">Leave waiting room</button>
+          <button type="button" class="button button-text" data-open-troubleshoot>Need help?</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- AFTER-VISIT SUMMARY -->
+    <section class="screen" id="summaryView" hidden>
+      <div class="summary-actions no-print">
+        <button type="button" class="button button-secondary" id="summaryBack">← Back to my visits</button>
+        <button type="button" class="button button-secondary" id="summaryRead"><i class="fa-solid fa-volume-high" aria-hidden="true"></i> Read aloud</button>
+        <button type="button" class="button button-secondary" id="summaryPrint"><i class="fa-solid fa-print" aria-hidden="true"></i> Print</button>
+        <button type="button" class="button button-secondary" id="summaryPdf"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Download PDF</button>
+        <button type="button" class="button button-primary" id="summarySend"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Send to caregiver</button>
+      </div>
+      <p id="summarySendStatus" class="helper-text no-print" role="status" aria-live="polite"></p>
+      <article id="summaryDocument" class="summary-document" aria-label="After-visit summary"></article>
+    </section>
+
+    <dialog id="rescheduleDialog" class="dialog" aria-labelledby="rescheduleTitle">
+      <form method="dialog" id="rescheduleForm" class="form-stack">
+        <h2 id="rescheduleTitle">Reschedule visit</h2>
+        <p class="helper-text">Pick a new day and time.</p>
+        <div class="form-field">
+          <label for="rescheduleDate">New day</label>
+          <input type="date" id="rescheduleDate" required>
+        </div>
+        <div class="form-field">
+          <label for="rescheduleTime">New time</label>
+          <input type="time" id="rescheduleTime" required>
+        </div>
+        <div class="button-row">
+          <button type="button" class="button button-secondary" id="rescheduleCancel">Keep my time</button>
+          <button type="submit" class="button button-primary" value="save">Save new time</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="screen" id="troubleshoot" hidden>
+      <p class="eyebrow">HELP</p>
+      <h1>Having trouble?</h1>
+      <p class="lead">
+        Try these steps one at a time. You can come back to your visit at any time.
+      </p>
+
+      <div class="card sound-test">
+        <div>
+          <h2>Check your sound</h2>
+          <p>Press the button. You should hear a voice say a short sentence.</p>
+        </div>
+        <button type="button" class="button button-primary" id="soundTestButton">
+          <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+          Play test sound
+        </button>
+        <p id="soundTestStatus" class="helper-text" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="trouble-list">
+        <details class="trouble-item" open>
+          <summary><i class="fa-solid fa-ear-listen" aria-hidden="true"></i> I can't hear my provider</summary>
+          <ol>
+            <li>Turn up the volume on your device.</li>
+            <li>Check that your device is not on silent or muted.</li>
+            <li>If you use headphones, unplug and plug them in again.</li>
+            <li>Press "Play test sound" above to check your speakers.</li>
+          </ol>
+        </details>
+
+        <details class="trouble-item">
+          <summary><i class="fa-solid fa-microphone-slash" aria-hidden="true"></i> My provider can't hear me</summary>
+          <ol>
+            <li>On the call, check the Mute button says "Mute" (not "Unmute").</li>
+            <li>Allow microphone access if your browser asks.</li>
+            <li>Move to a quieter spot if you can.</li>
+            <li>You can always type a message or use your communication tools instead.</li>
+          </ol>
+        </details>
+
+        <details class="trouble-item">
+          <summary><i class="fa-solid fa-video-slash" aria-hidden="true"></i> My video isn't working</summary>
+          <ol>
+            <li>Check the camera button says "Turn camera off" (not "Turn camera on").</li>
+            <li>Allow camera access if your browser asks.</li>
+            <li>Close other apps that might be using your camera.</li>
+          </ol>
+        </details>
+
+        <details class="trouble-item">
+          <summary><i class="fa-solid fa-wifi" aria-hidden="true"></i> The call is slow or freezing</summary>
+          <ol>
+            <li>Move closer to your Wi-Fi router.</li>
+            <li>Ask others in your home to pause streaming or downloads.</li>
+            <li>Turn your camera off to help the call run better.</li>
+            <li>Refresh this page. Your profile is saved and will still be here.</li>
+          </ol>
+        </details>
+
+        <details class="trouble-item">
+          <summary><i class="fa-solid fa-hands" aria-hidden="true"></i> I can't find my communication tools</summary>
+          <ol>
+            <li>Only the tools you chose in your profile appear during a visit.</li>
+            <li>On the home page, press "Edit My Profile".</li>
+            <li>Tick the tools you want, then press Save. They show up the next time you join a visit.</li>
+          </ol>
+        </details>
+      </div>
+
+      <div class="card help-banner">
+        <i class="fa-solid fa-headset help-banner-icon" aria-hidden="true"></i>
+        <div>
+          <h2>Still stuck?</h2>
+          <p>Ask a family member or caregiver to help, or contact your provider's office.</p>
+        </div>
+      </div>
+
+      <div class="button-row trouble-actions">
+        <button type="button" class="button button-primary" id="troubleshootBack">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span id="troubleshootBackLabel">Go back</span>
+        </button>
+      </div>
+    </section>
 
     <!-- VIDEO VISIT -->
     <section id="appointment" class="screen call-screen" hidden>
@@ -337,24 +597,56 @@
           <div class="call-logo">
             <img src="images/logo.png" alt="BeyondWords" class="site-logo">
           </div>
+
+          <div class="call-status" role="group" aria-label="Call status">
+            <span class="call-pill" id="callPill" data-state="waiting">
+              <span class="pill-dot" aria-hidden="true"></span>
+              <span id="callPillText">Waiting for provider</span>
+            </span>
+            <span class="call-timer">
+              <i class="fa-regular fa-clock" aria-hidden="true"></i>
+              <span class="visually-hidden">Call length </span><span id="callTimer">00:00</span>
+            </span>
+            <span class="conn" data-conn data-level="good" role="img" aria-label="Connection: Good">
+              <i class="fa-solid fa-signal" aria-hidden="true"></i>
+              <span class="conn-text">Good</span>
+            </span>
+            <span class="private-label"><i class="fa-solid fa-lock" aria-hidden="true"></i> Private visit</span>
+          </div>
+
           <button type="button" class="call-text-button" id="callHelp">
             Need help?
           </button>
         </div>
 
+        <div class="reconnect-banner" data-reconnect role="alert" hidden>
+          <i class="fa-solid fa-rotate fa-spin" aria-hidden="true"></i>
+          Reconnecting... your internet connection was lost.
+        </div>
+
+        <p class="call-toast" id="callToast" role="status" aria-live="polite" hidden></p>
+
         <div class="provider-video" id="providerVideo">
+          <video id="remoteVideo" class="remote-video" autoplay playsinline hidden></video>
+          <p class="remote-tag" id="remoteTag" hidden>
+            <span id="remoteTagName">Your provider</span>
+            <span class="remote-muted" id="remoteMuted" hidden><i class="fa-solid fa-microphone-slash" aria-hidden="true"></i> Muted</span>
+          </p>
           <div class="provider-avatar" aria-hidden="true">Dr</div>
-          <h2>Your provider will appear here</h2>
-          <p>This is a video-call demonstration.</p>
+          <h2 id="callProviderName">Your provider will appear here</h2>
+          <p id="callProviderRole">This is a video-call demonstration.</p>
           <span class="video-demo-label">VIDEO PREVIEW</span>
         </div>
 
         <div class="self-view">
+          <video id="selfVideo" autoplay muted playsinline hidden></video>
           <div class="self-avatar" aria-hidden="true">You</div>
-          <span>You</span>
+          <span class="self-name">You</span>
+          <span class="self-off" hidden>Camera off</span>
+          <span class="self-muted" id="selfMuted" hidden><i class="fa-solid fa-microphone-slash" aria-hidden="true"></i> Muted</span>
         </div>
 
-        <p id="callMessage" class="call-message" role="status" aria-live="polite" hidden></p>
+        <p id="callMessage" class="call-message" data-autofade="5000" role="status" aria-live="polite" hidden></p>
 
         <button type="button" id="exitFocusButton" class="exit-focus-button"
                 aria-label="Exit focus mode" hidden>
@@ -372,8 +664,13 @@
           </button>
         </div>
 
-        <div class="call-panel-content" data-panel="drawing" hidden>
-          <p>Draw or write to show what you mean.</p>
+        <div class="call-panel-content" data-panel="gesture" data-feature="gesture" hidden>
+          <p>Tap a picture to show your provider what you mean.</p>
+          <div class="gesture-grid" id="patientGestureBank" role="group" aria-label="Gestures"></div>
+        </div>
+
+        <div class="call-panel-content" data-panel="drawing" data-feature="drawing" hidden>
+          <p>Draw to show what you mean.</p>
 
           <canvas id="drawingCanvas" width="700" height="250"
                   aria-label="Drawing area"></canvas>
@@ -389,11 +686,11 @@
           </div>
 
           <p id="drawingStatus" class="helper-text" aria-live="polite">
-            Your drawing stays on this page until you leave or refresh.
+            Your provider can see your drawing as you draw.
           </p>
         </div>
 
-        <div class="call-panel-content" data-panel="transcript" hidden>
+        <div class="call-panel-content" data-panel="transcript" data-feature="message" hidden>
           <p>Type a message to share with your provider.</p>
 
           <label for="transcriptText">Your message</label>
@@ -402,9 +699,29 @@
           <button type="button" class="button button-primary" id="useTranscript">
             Show message on call
           </button>
+
+          <div class="tts-controls" data-feature="tts" hidden>
+            <label for="transcriptSpeed">Voice speed</label>
+            <select id="transcriptSpeed">
+              <option value="0.7">Slow</option>
+              <option value="0.9" selected>Normal</option>
+              <option value="1.1">Fast</option>
+            </select>
+
+            <div class="toolbar">
+              <button type="button" class="button button-secondary" id="readTranscript">
+                <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+                Read aloud
+              </button>
+            </div>
+          </div>
+
+          <p id="transcriptStatus" class="helper-text" role="status" aria-live="polite"></p>
         </div>
 
-        <div class="call-panel-content" data-panel="notes" hidden>
+        <div class="call-panel-content" data-panel="summary" id="summaryPanel" hidden></div>
+
+        <div class="call-panel-content" data-panel="notes" data-feature="notes" hidden>
           <p>Write down anything you want to remember from your visit.</p>
 
           <label for="visitNotes">My visit notes</label>
@@ -414,17 +731,22 @@
 
       <!-- Bottom call toolbar -->
       <div class="call-toolbar" aria-label="Communication and call controls">
-        <button type="button" class="call-tool" data-tool="drawing" aria-pressed="false">
-          <i class="fa-solid fa-pen" aria-hidden="true"></i>
-          <span>Draw or write</span>
+        <button type="button" class="call-tool" data-tool="gesture" data-feature="gesture" aria-pressed="false" hidden>
+          <i class="fa-solid fa-hands" aria-hidden="true"></i>
+          <span>Gestures</span>
         </button>
 
-        <button type="button" class="call-tool" data-tool="transcript" aria-pressed="false">
+        <button type="button" class="call-tool" data-tool="drawing" data-feature="drawing" aria-pressed="false" hidden>
+          <i class="fa-solid fa-pencil" aria-hidden="true"></i>
+          <span>Drawing</span>
+        </button>
+
+        <button type="button" class="call-tool" data-tool="transcript" data-feature="message" aria-pressed="false" hidden>
           <i class="fa-solid fa-comment-dots" aria-hidden="true"></i>
           <span>Type a message</span>
         </button>
 
-        <button type="button" class="call-tool" data-tool="notes" aria-pressed="false">
+        <button type="button" class="call-tool" data-tool="notes" data-feature="notes" aria-pressed="false" hidden>
           <i class="fa-solid fa-note-sticky" aria-hidden="true"></i>
           <span>Visit notes</span>
         </button>
@@ -443,6 +765,11 @@
           <i class="fa-solid fa-expand" aria-hidden="true"></i>
           <span>Focus mode</span>
         </button>
+
+        <button type="button" class="call-tool" data-tool="summary" aria-pressed="false">
+          <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
+          <span>Visit summary</span>
+        </button>
       </div>
 
       <div class="end-call-container">
@@ -454,6 +781,26 @@
     </section>
 
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="BeyondWords" class="footer-logo">
+        <p>Communication support for video visits, designed for people living with aphasia.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><button type="button" class="footer-link" data-open-troubleshoot>Troubleshooting</button></li>
+          <li><a class="footer-link" href="provider.html" target="_blank" rel="noopener">Provider View<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        </ul>
+      </nav>
+
+      <p class="footer-note">
+        Demonstration only. Not for real medical use. In an emergency, call 911.
+        &copy; 2026 BeyondWords
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
-
